@@ -1,0 +1,97 @@
+# Arduino
+## Temporizadores
+
+### Objetivos
+Usados para gerar tom, PWM e as ondas usadas pelo Servo.
+
++ Cuidado ao utilizar essas coisas ao mesmo tempo.
+
+### No Arduino UNO
+Há 3 temporizadores dentro do arduino. Graças a eles, é possível haver a função `delay()`.
+
++ Timer0 e Timer2 possuem 8 bits -> possível contar de 0 a 255
++ Timer1 possui 16 bits -> contar de 0 a 66535. Controla o servo
+
+Moral da história: não podemos usar o mesmo contador para duas coisas ao mesmo tempo!
+
+Obs.: Não é possível usar o pino 9 ou 10 PWM e um servo no pino 9, por ex, ao mesmo tempo, pois o ocntador é o mesmo (do TImer1).
+
+## Interrupções
+
+É um sinal que desvia para uma determinada rotina.
+Por exemplo, o `delay` é feito da seguinte forma: o processador programa o contador e quando ele chega no final, envia o sinal de desvio e interrompe o processador.
+
+### Interrupção no Arduino UNO
+
++ Pino de Reset
++ etc... (muitas outras)
+
+Cada evento de interrupção está relacionado a um endereço (para onde vai desviar quando o sinal de interrupção chegar).
+Aconteceu o evento, o processador olha o endereço e desvia para onde estiver escrito nesse endereço.
+
+Resumo da Ópera:
+Ocorreu o evento, há a interrupção (e o desvio), a interrupção é desabilitada, algo acontece, depois volta com o retorno (RETI) e habilita a interrupção mais uma vez.
+
+É como se fosse uma função, mas não há `call`.
+
+### Vetores de Interrupção
+É justamente essa associação da interrupção a um endereço.
+
+Há uma tabela de interrupção com os vetores de interupção.
+
+### Na Prática
+
+Interrupção 0 é no pino 1 e a interrupção 1 é no pino 2.
+
+Pino digital 2 ou 3 possuem os 4 modos de interrupção. Os outros são só os 2 modos (ver quais).
+
+Para detalher, ver "Rotinas de Interrupção" no slide.
+Lá, há um exemplo que faz o seguinte: quando aperta o botão, o led acende; quando solta o botão, o led apaga.
+
+## Sensores e Atuadores
+
+### Gerando Frequência:
+Para gerar um som, utilizamos a função `tone(pinio, frequencia)`
+
+### Sensor Ultrassônico
++ 0.3 cm
++ 15º de ângulo
++ De 2 a 450 cm
+
+Com ele, é possível medir distância das coisas.
+Por exemplo, medir nível da caixa dágua. Ele joga a onda na água e vai demorar um tempo para voltar no sensor. A partir do tempo, é possível descobrir a distância e, por consequência, o nível da caixa dágua.
+
+
+O sinal é jogado pelo trigger e recebido novamente pelo echo. Precisamos medir o tempo desse intervalo, que será dobrado, pois há o tempo de ir até o objeto e depois voltar.
+
+### Luz
+
+Há muito mais opções que o LED. Por exemplo, sensor de infrevaermelho; sensor de temperatura e pressão.
+
+### Sensores e mais sensores
+
+...
+
+### Servo
+
+Ele é para deixar algo numa posição firme. Se quisermos ficar rodando, utilizamos um motor contínuo. Se quisermos um ajuste mais fino, utilizamos um _stepmotor_ (motor de passo).
+
+Manda ondas para modificar a posiçãodo braço.
+
+Utilizaremos a biblioteca `Servo.h`.
+
+Os outros motores precisam de mais corrente, então é preciso uma Ponte H para ligar eles. O servo funciona com 3.3V, então conseguimos ligar direto no Arduino.
+
+### Multiplexador Analogico
+
+-> Saída acompanha a entrada de acordo com os bits de seleção.
+
+Nesse caso, a voltagem de saída acompanha a voltagem da entrada.
+
+# Sensor de Inércia (Acelerômetro)
+
+Calibrar é chatinho, mas depois é tranquilo. Tem biblioteca para ajudar.
+
+## Falta Ver
+
+Protocólos SPI e 
