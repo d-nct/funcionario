@@ -1,6 +1,0 @@
-# Implementando SIGUINHA
-
-- List é interface, então não fazemos `new List<>()`.
-- Boa prática é pedir os tipos mais genéricos possíveis.
-	- Declarar como `List`, `Map`, não como `ArrayList` e `HashMap`, somente instanciar dessa forma.
-
